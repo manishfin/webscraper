@@ -1,0 +1,72 @@
+{% extends './index.html' %}
+{% block title %}Scraper{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center" style="padding: 40px;">
+        <div class="card shadow-sm p-4 bg-white rounded col-md-8 order-md-1">
+            <form class="card card-sm" action="/" method="POST">
+                {% csrf_token %}
+                <div class="row no-gutters align-items-center">
+                    <div class="col">
+                        <input class="form-control form-control-md form-control-borderless" name="item" type="search" placeholder="Search item" required>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-md btn-success m-0" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card shadow-none p-4">
+        <div class="row container justify-content-center text-center m-0">
+            {% if item %}
+                <div class="p-4 col-12">Search result for "{{item}}"</div>
+            {% endif %}
+            {% if not data and not error %}
+                <div class="p-4 col-12">Please search an item</div>
+            {% else %}
+                <div class="col-12">{{error}}</div>
+            {% endif %}
+        </div>
+    <div class="row container justify-content-center m-0">
+        {% for item in data %}
+            <div class="col-md-3 p-4">
+                <div class="shadow">
+                    <div class="row justify-content-center m-0 p-3 col-md-12" style="height: 250px;">
+                        <span>
+                            <img src={{item.img}} class="img-fluid">
+                        </span>
+                    </div>
+                    <div class="row m-0">
+                        <div class="row m-0 col-12 font-weight-bold pt-3 pb-3 text-truncate" title="{{item.name}}">{{item.name}}</div>
+                        <div class="row m-0 col-12 justify-content-center">
+                            <div class="pt-3 pb-3 productprice col-md-12 p-0">
+                                <div class="col-md-8 float-left m-0 p-0">
+                                    {% if item.price %}
+                                        <span class="pricetext">{{item.price}}</span>
+                                    {% else %}
+                                        <span class="font-weight-bold" style="font-size: 11px;">{{item.status}}</span> 
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="row m-0 float-right justify-content-right align-items-center" style="height: 100%;">
+                                    <div class="">
+                                        <a href={{item.link}} class="btn btn-danger btn-sm" target="_blank" role="button">
+                                        {% if item.price %}
+                                            <span style="font-size: 12px;">BUY</span>
+                                        {% else %}
+                                            <span style="font-size: 12px;">VIEW</span>
+                                        {% endif %}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+</div>
+{% endblock %}
