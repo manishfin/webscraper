@@ -39,7 +39,8 @@ def scraper(request):
         search = item.split()
         search_string = "+".join(search)
         try:
-            html = urlopen(AMAZON+"/s?k="+search_string)
+            url = AMAZON+"/s?k="+search_string
+            html = urlopen(url)
             soup = BeautifulSoup(html.read(), 'html.parser')
             searched_items = soup.findAll("div", attrs={"data-asin" : True})
         except:
