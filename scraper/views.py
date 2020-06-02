@@ -51,3 +51,26 @@ def scraper(request):
             data.append(item_data)
         return render(request, 'scraper/scraper.html', {"data": data, 'item': item})
     return render(request, 'scraper/scraper.html')
+
+# def sc(req):
+#     if req.method == 'POST':
+#         item = req.POST['item']
+#         url = 'https://www.ipvoid.com/ip-blacklist-check/'
+#         data = {'ip': item}
+#         # data = json.dumps(data)
+#         # data = str(data)
+#         # data = data.encode('utf-8')
+#         # html = urlopen(url, data=data)
+#         # Post Method is invoked if data != None
+#         data = parse.urlencode(data).encode()
+#         reqs = request.Request(url, data=data) # this will make the method "POST"
+#         resp = request.urlopen(reqs)
+#         # req =  request.Request(url, data=data)
+#         # # Response
+#         # resp = request.urlopen(req)
+#         # 115.98.228.100
+#         soup = BeautifulSoup(resp.read(), 'html.parser')
+#         items = soup.findAll("div", {"class": "table-responsive"})
+#         print(items)
+#         return render(req, 'scraper/scraper.html', {'items': items})
+#     return render(req, 'scraper/scraper.html')
